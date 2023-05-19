@@ -1,0 +1,33 @@
+{
+  "name": "bitroll",
+  "version": "0.1.0",
+  "description": "A sovereign rollup for Bitcoin",
+  "main": "./src/client/client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitroll/bitroll.git"
+  },
+  "keywords": [
+    "blockchain",
+    "bitcoin",
+    "rollup",
+    "layer-2"
+  ],
+  "author": "The Bitroll Team",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/bitroll/bitroll/issues"
+  },
+  "homepage": "https://github.com/bitroll/bitroll#readme",
+  "dependencies": {
+    "bitcoin-core": "^4.1.0",
+    "bitcoinjs-lib": "^6.1.0",
+    "elliptic": "^6.5.4",
+    "fastify": "^4.17.0",
+    "level": "^8.0.0"
+  }
+}
