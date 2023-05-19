@@ -20,7 +20,7 @@ export default {
 
     // DB Path
     LEVEL_PATH: "C:/Users/npqua/desktop/Bitroll/log/leveldb",
-    LOG_FILE: "C:/Users/npqua/desktop/Bitroll/log/log",
+    LOG_FILE: "C:/Users/npqua/desktop/Bitroll/log/logheight",
 
     FIRST_MINT_ADDR: "e10ae96fe7d69b558636d15731ae213155ab662702307a124a8ee913841d41cd",
     FIRST_MINT_AMOUNT: "100000000000000000000000000"

@@ -33,33 +33,15 @@ const stateDB = new Level(LEVEL_PATH, { valueEncoding: "json" });
 let counter;
 
 if (!fs.existsSync(LOG_FILE)) {
+    console.log("wtf");
+
     counter = START_SYNC;
 
     // Initial coin mint
     await stateDB.put(FIRST_MINT_ADDR, { balance: FIRST_MINT_AMOUNT, nonce: 0 });
+
+    fs.writeFileSync(LOG_FILE, counter.toString());
 } else {
     counter = parseInt(fs.readFileSync(LOG_FILE));
 }
 
-
-// Test transaction
-
-const txObj = {
-    to: "d1bd44aea0b53f74075be0ad4b7240448d61a34157ec782cc1b8aee3ec675127",
-    value: 1000000000n,
-    gasPrice: 1000000n,
-    nonce: 0
-}
-
-signTransaction(txObj, bitrollKeyPair);
-
-console.log(txObj);
-
-const batch = encodeBatch([ txObj ]);
-
-await transitState(decodeBatch(batch), stateDB, "d1bd44aea0b53f74075be0ad4b7240448d61a34157ec782cc1b8aee3ec675127");
-
-console.log(
-    await stateDB.get(FIRST_MINT_ADDR),
-    await stateDB.get("d1bd44aea0b53f74075be0ad4b7240448d61a34157ec782cc1b8aee3ec675127")
-);

@@ -18,8 +18,6 @@ export async function transitState(batch, stateDB, sequencerAddress) {
         states[sequencerAddress] = await stateDB.get(sequencerAddress);
     }
 
-    console.log(sequencerAddress);
-
     for (const txn of batch) {
         // Check if signature is correct
         if (!(await lightTxVerify(txn, stateDB))) continue;
@@ -58,15 +56,23 @@ export async function transitState(batch, stateDB, sequencerAddress) {
 
             states[sequencerAddress].balance = (BigInt(states[sequencerAddress].balance) + txn.gasPrice).toString(); // Reward for sequencer
 
+            console.log(sequencerAddress, states[sequencerAddress].balance);
+
             // Cache receiver state
-            if (!states[txn.to] && existedAddresses.includes(txn.to)) { // If receiver existed in state DB but not in cache
+            if (states[txn.to]) {
+                // Update receiver's balance
+                states[txn.to].balance = (BigInt(states[txn.to].balance) + txn.value).toString();
+            } else if (!states[txn.to] && existedAddresses.includes(txn.to)) { // If receiver existed in state DB but not in cache
                 states[txn.to] = await stateDB.get(txn.to);
+
+                // Update receiver's balance
+                states[txn.to].balance = (BigInt(states[txn.to].balance) + txn.value).toString();
             } else if (!existedAddresses.includes(txn.to)) { // If receiver does not exist at all
                 states[txn.to] = { balance: "0", nonce: 0 };
-            }
 
-            // Update receiver's balance
-            states[txn.to].balance = (BigInt(states[txn.to].balance) + txn.value).toString();
+                // Update receiver's balance
+                states[txn.to].balance = (BigInt(states[txn.to].balance) + txn.value).toString();
+            }
         }
     }
 
